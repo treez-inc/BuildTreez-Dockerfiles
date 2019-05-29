@@ -64,7 +64,7 @@ RUN curl --create-dirs -fsSLo /usr/share/jenkins/slave.jar https://repo.jenkins-
     && chmod 755 /usr/share/jenkins \
     && chmod 644 /usr/share/jenkins/slave.jar
 
-COPY jenkins-slave /usr/local/bin/jenkins-slave
+ADD jenkins-slave /usr/local/bin/jenkins-slave
 RUN chmod +x /usr/local/bin/jenkins-slave
 
 RUN mkdir /home/jenkins/.jenkins && mkdir -p /home/jenkins/agent
