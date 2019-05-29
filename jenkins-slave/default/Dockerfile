@@ -73,4 +73,4 @@ RUN chown -R jenkins:jenkins /home/jenkins
 USER jenkins
 WORKDIR /home/jenkins
 
-# ENTRYPOINT ["jenkins-slave"]
+ENTRYPOINT ["jenkins-slave"]
