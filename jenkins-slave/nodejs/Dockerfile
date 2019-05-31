@@ -78,10 +78,10 @@ WORKDIR /home/jenkins
 # install Node
 #
 RUN mkdir .nvm
-RUN curl -L https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-RUN nvm install 8.16.0
-RUN nvm install 10.15.1
-RUN nvm alias default 10.15.1
-RUN nvm use default
+RUN curl -L https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash \
+    && nvm install 8.16.0 \
+    && nvm install 10.15.1 \
+    && nvm alias default 10.15.1 \
+    && nvm use default
 
 ENTRYPOINT ["jenkins-slave"]
