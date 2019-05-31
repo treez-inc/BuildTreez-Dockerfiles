@@ -79,6 +79,7 @@ WORKDIR /home/jenkins
 #
 RUN mkdir .nvm
 RUN curl -L https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash \
+    && . ./.nvm/nvm.sh \
     && nvm install 8.16.0 \
     && nvm install 10.15.1 \
     && nvm alias default 10.15.1 \
