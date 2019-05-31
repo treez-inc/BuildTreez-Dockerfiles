@@ -49,17 +49,10 @@ RUN apt-get install -y wget
 RUN apt-get install -y curl
 
 #
-# install Node 10
+# install Node 8
 #
-ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 10.15.1
-
-RUN mkdir $NVM_DIR
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash \
-    && . $NVM_DIR/nvm.sh \
-    && nvm install $NODE_VERSION \
-    && nvm alias default $NODE_VERSION \
-    && nvm use default
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get install -y nodejs
 
 #
 # Jenkins Slave
@@ -77,21 +70,13 @@ RUN curl --create-dirs -fsSLo /usr/share/jenkins/slave.jar https://repo.jenkins-
     && chmod 755 /usr/share/jenkins \
     && chmod 644 /usr/share/jenkins/slave.jar
 
-ADD jenkins-slave/default/jenkins-slave /usr/local/bin/jenkins-slave
+ADD jenkins-slave/node10/jenkins-slave /usr/local/bin/jenkins-slave
 RUN chmod +x /usr/local/bin/jenkins-slave
 
 RUN mkdir /home/jenkins/.jenkins && mkdir -p /home/jenkins/agent
 RUN chown -R jenkins:jenkins /home/jenkins
 
 USER jenkins
-
 WORKDIR /home/jenkins
-
-# add NVM to PATH
-RUN echo '\n\
-    export NVM_DIR="/usr/local/nvm" \n\
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \n\
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" \n\
-' >> .bashrc
 
 ENTRYPOINT ["jenkins-slave"]
