@@ -47,6 +47,10 @@ RUN apt-get install -y openjdk-8-jdk
 RUN apt-get install -y git
 RUN apt-get install -y wget
 RUN apt-get install -y curl
+RUN apt-get update
+RUN apt-get install -y python3-pip
+RUN apt-get update
+RUN pip3 install awscli
 
 #
 # install Node 8
