@@ -43,14 +43,24 @@ RUN dpkg-reconfigure -f noninteractive tzdata
 #
 # install dependencies
 #
-RUN apt-get install -y openjdk-8-jdk
-RUN apt-get install -y git
-RUN apt-get install -y wget
-RUN apt-get install -y curl
-RUN apt-get update
-RUN apt-get install -y python3-pip
-RUN apt-get update
-RUN pip3 install awscli
+RUN apt-get update -y
+RUN apt-get upgrade -y
+RUN apt-get install -y   \
+    apt-transport-https  \
+    build-essential      \
+    bzip2                \
+    ca-certificates      \
+    curl                 \
+    git                  \
+    iptables             \
+    jq                   \
+    lvm2                 \
+    lxc                  \
+    openjdk-8-jdk        \
+    python3-pip          \
+    unzip                \
+    wget                 \
+    zip
 
 #
 # install Node 8
@@ -59,13 +69,26 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
 
 #
+# install AWS tools
+#
+RUN apt-get update
+RUN pip3 install awscli
+
+#
+# install Docker (DinD)
+#
+RUN apt-get install -y docker.io
+RUN curl -sSL https://raw.githubusercontent.com/docker/docker/master/hack/dind -o /usr/local/bin/dind \
+    && chmod a+x /usr/local/bin/dind
+
+#
 # Jenkins Slave
 #
 # References:
 #     https://hub.docker.com/r/jenkinsci/slave/dockerfile
 #     https://hub.docker.com/r/jenkinsci/jnlp-slave/dockerfile
 #
-ARG JENKINS_VERSION=3.29
+ARG JENKINS_VERSION=3.33
 
 RUN groupadd -g 1000 jenkins
 RUN useradd -d /home/jenkins -u 1000 -g 1000 -m jenkins
@@ -75,6 +98,7 @@ RUN curl --create-dirs -fsSLo /usr/share/jenkins/slave.jar https://repo.jenkins-
     && chmod 644 /usr/share/jenkins/slave.jar
 
 ADD jenkins-slave/node8/jenkins-slave /usr/local/bin/jenkins-slave
+ADD jenkins-slave/node10/jenkins-slave /usr/local/bin/jenkins-slave
 RUN chmod +x /usr/local/bin/jenkins-slave
 
 RUN mkdir /home/jenkins/.jenkins && mkdir -p /home/jenkins/agent
