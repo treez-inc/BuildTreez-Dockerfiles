@@ -54,16 +54,27 @@ RUN apt-get install -y   \
     git                  \
     iptables             \
     jq                   \
+    libbz2-dev           \
+    libffi-dev           \
+    libncurses-dev       \
+    libreadline-dev      \
+    libsqlite3-dev       \
+    libssl-dev           \
+    locales              \
     lvm2                 \
     lxc                  \
     openjdk-8-jdk        \
     python3-pip          \
     unzip                \
     wget                 \
-    zip
+    zip                  \
+    zlib1g-dev
+
+RUN locale-gen en_US.UTF-8
+ENV LANG=en_US.UTF-8
 
 #
-# install Node 8
+# install Node
 #
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
@@ -71,8 +82,8 @@ RUN apt-get install -y nodejs
 #
 # install AWS tools
 #
-RUN apt-get update
 RUN pip3 install awscli
+RUN pip3 install awsebcli
 
 #
 # install Docker (DinD)
@@ -97,8 +108,7 @@ RUN curl --create-dirs -fsSLo /usr/share/jenkins/slave.jar https://repo.jenkins-
     && chmod 755 /usr/share/jenkins \
     && chmod 644 /usr/share/jenkins/slave.jar
 
-ADD jenkins-slave/node8/jenkins-slave /usr/local/bin/jenkins-slave
-ADD jenkins-slave/node10/jenkins-slave /usr/local/bin/jenkins-slave
+ADD ./jenkins-slave /usr/local/bin/jenkins-slave
 RUN chmod +x /usr/local/bin/jenkins-slave
 
 RUN mkdir /home/jenkins/.jenkins && mkdir -p /home/jenkins/agent
