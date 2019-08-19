@@ -74,7 +74,7 @@ RUN locale-gen en_US.UTF-8
 ENV LANG=en_US.UTF-8
 
 #
-# install Node 10
+# install Node
 #
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 RUN apt-get install -y nodejs
