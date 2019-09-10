@@ -99,6 +99,8 @@ RUN apt-get install -y docker.io
 RUN curl -sSL https://raw.githubusercontent.com/docker/docker/master/hack/dind -o /usr/local/bin/dind \
     && chmod a+x /usr/local/bin/dind
 
+RUN service postgresql start
+
 #
 # Jenkins Slave
 #
