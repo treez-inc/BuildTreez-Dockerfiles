@@ -41,6 +41,11 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
 
 #
+# enable running services
+#
+RUN echo exit 0 > /usr/sbin/policy-rc.d
+
+#
 # install dependencies
 #
 RUN apt-get update -y
@@ -64,6 +69,8 @@ RUN apt-get install -y   \
     lvm2                 \
     lxc                  \
     openjdk-8-jdk        \
+    postgresql           \
+    postgresql-contrib   \
     python3-pip          \
     unzip                \
     wget                 \
