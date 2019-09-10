@@ -58,6 +58,7 @@ RUN apt-get install -y   \
     curl                 \
     git                  \
     iptables             \
+    iputils-ping         \
     jq                   \
     libbz2-dev           \
     libffi-dev           \
@@ -72,6 +73,7 @@ RUN apt-get install -y   \
     postgresql           \
     postgresql-contrib   \
     python3-pip          \
+    telnet               \
     unzip                \
     wget                 \
     zip                  \
