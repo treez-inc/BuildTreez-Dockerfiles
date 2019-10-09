@@ -63,6 +63,7 @@ RUN apt-get install -y   \
     locales              \
     lvm2                 \
     lxc                  \
+    maven                \
     openjdk-8-jdk        \
     python3-pip          \
     unzip                \
