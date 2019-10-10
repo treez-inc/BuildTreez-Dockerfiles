@@ -123,4 +123,9 @@ RUN chown -R jenkins:jenkins /home/jenkins
 USER jenkins
 WORKDIR /home/jenkins
 
+ADD ./pom.xml /home/jenkins/pom.xml
+RUN mvn clean install
+RUN mvn clean
+RUN rm pom.xml
+
 ENTRYPOINT ["jenkins-slave"]
