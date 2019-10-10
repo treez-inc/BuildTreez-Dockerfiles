@@ -75,6 +75,11 @@ RUN locale-gen en_US.UTF-8
 ENV LANG=en_US.UTF-8
 
 #
+# point to JDK 8
+#
+RUN ln -sf /usr/lib/jvm/java-8-openjdk-amd64/bin/java /etc/alternatives/java
+
+#
 # install Node
 #
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -

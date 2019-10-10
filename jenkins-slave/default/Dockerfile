@@ -63,6 +63,7 @@ RUN apt-get install -y   \
     locales              \
     lvm2                 \
     lxc                  \
+    maven                \
     openjdk-8-jdk        \
     python3-pip          \
     unzip                \
@@ -72,6 +73,11 @@ RUN apt-get install -y   \
 
 RUN locale-gen en_US.UTF-8
 ENV LANG=en_US.UTF-8
+
+#
+# point to JDK 8
+#
+RUN ln -sf /usr/lib/jvm/java-8-openjdk-amd64/bin/java /etc/alternatives/java
 
 #
 # install Node 10
