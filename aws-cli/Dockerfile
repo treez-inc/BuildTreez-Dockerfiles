@@ -1,17 +1,16 @@
-FROM ubuntu:18.04
+FROM amazonlinux:2
 
-RUN apt-get update && apt-get upgrade -y
+RUN yum -y update
 
-RUN apt-get install -y \
-    curl  \
-    groff \
-    less  \
+RUN yum -y install \
+    groff          \
+    less           \
+    mailcap        \
     unzip
 
-WORKDIR /root
-
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-RUN unzip awscliv2.zip
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "aws-cli-v2.zip"
+RUN unzip "aws-cli-v2.zip"
+RUN rm "aws-cli-v2.zip"
 RUN ./aws/install
 
 CMD ["/bin/sh"]
